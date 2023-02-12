@@ -53,4 +53,7 @@ const Genre = db.define("genre", {
     }
 })
 
+Movie.belongsToMany(Genre, { through: "movies_genres" });
+Genre.belongsToMany(Movie, {through: "movies_genres"})
+
 module.exports = db;
