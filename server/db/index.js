@@ -47,18 +47,34 @@ const Movie = db.define("movie", {
 });
 
 const Genre = db.define("genre", {
-    name: {
-        type: Sequelize.STRING(50),
-        allowNull: false
+  name: {
+    type: Sequelize.STRING(50),
+    allowNull: false,
+  },
+});
+
+const movies_genres = db.define('movies_genres', {
+  MovieId: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: Movie,
+      key: 'id'
     }
+  },
+  ActorId: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: Genre,
+      key: 'id'
+    }
+  }
 })
 
-Movie.belongsToMany(Genre, { through: "movies_genres" });
-Genre.belongsToMany(Movie, {through: "movies_genres"})
+Movie.belongsToMany(Genre, { through: "movies_genres" }); //setGenres
+Genre.belongsToMany(Movie, { through: "movies_genres" });
 
-module.exports = db;
 module.exports = {
   db,
-  Movie, 
-  Genre
+  Movie,
+  Genre,
 };

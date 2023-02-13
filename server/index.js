@@ -15,12 +15,19 @@ const startServer = async () => {
 }
 startServer();
 
+// matches any url for a GET request to a possible file
+// in the public directory.
+// if it finds the file... it'll send that file.
+app.use(express.static(__dirname + "/public"))
+
 // start of all middleware
 // these two lines make it so req.body works!
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // the above makes it so req.body will work
 const genresRouter = require("./routes/genre");
+const moviesRouter = require("./routes/movie");
+app.use("/movies", moviesRouter);
 // the line below makes it so it's genre
 // any request method to any row that starts w /genre
 // will go into this genresRouter
